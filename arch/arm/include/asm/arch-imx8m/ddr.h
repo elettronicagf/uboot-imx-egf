@@ -670,19 +670,20 @@ enum fw_type {
 	FW_2D_IMAGE,
 };
 
-struct dram_cfg_param {
+struct __attribute__((__packed__)) dram_cfg_param {
 	unsigned int reg;
 	unsigned int val;
 };
 
-struct dram_fsp_msg {
+struct __attribute__((__packed__)) dram_fsp_msg {
 	unsigned int drate;
 	enum fw_type fw_type;
 	struct dram_cfg_param *fsp_cfg;
 	unsigned int fsp_cfg_num;
 };
 
-struct dram_timing_info {
+struct __attribute__((__packed__)) dram_timing_info {
+	unsigned int total_size;
 	/* umctl2 config */
 	struct dram_cfg_param *ddrc_cfg;
 	unsigned int ddrc_cfg_num;

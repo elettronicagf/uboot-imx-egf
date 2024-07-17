@@ -208,6 +208,7 @@ void *dram_config_save(struct dram_timing_info *timing_info, unsigned long saved
 	struct dram_timing_info *saved_timing = (struct dram_timing_info *)saved_timing_base;
 	struct dram_cfg_param *cfg;
 
+	saved_timing->total_size = timing_info->total_size;
 	saved_timing->ddrc_cfg_num = timing_info->ddrc_cfg_num;
 	saved_timing->ddrphy_cfg_num = timing_info->ddrphy_cfg_num;
 	saved_timing->ddrphy_trained_csr_num = ddrphy_trained_csr_num;

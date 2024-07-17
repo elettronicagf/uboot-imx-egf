@@ -1,0 +1,33 @@
+if TARGET_EGF_3SM1009
+
+config SYS_BOARD
+	default "3sm1009"
+
+config SYS_VENDOR
+	default "egf"
+
+config SYS_CONFIG_NAME
+	default "egf_3sm1009"
+
+config IMX_CONFIG
+	default "board/freescale/imx8mp_evk/imximage-8mp-lpddr4.cfg"
+
+config MFG_EMB_DDR
+	bool "Force embedded DDR Memory timings without reading EEPROM"
+	default n
+
+
+choice MFG_WID_OPTIONS
+	prompt "Select WID to force embedded DDR timings"
+	depends on MFG_EMB_DDR
+
+	config FORCE_WID0800AA0101
+		bool "Select WID0800_AA01.01"
+
+	config FORCE_WID0800AB0101
+		bool "Select WID0800_AB01.01"
+
+
+endchoice
+
+endif
