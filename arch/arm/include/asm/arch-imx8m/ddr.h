@@ -683,7 +683,7 @@ struct __attribute__((__packed__)) dram_fsp_msg {
 };
 
 struct __attribute__((__packed__)) dram_timing_info {
-	unsigned int total_size;
+	u64 total_size;
 	/* umctl2 config */
 	struct dram_cfg_param *ddrc_cfg;
 	unsigned int ddrc_cfg_num;

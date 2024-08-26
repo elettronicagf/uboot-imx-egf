@@ -386,9 +386,9 @@ int gf_read_dram_timings_mx8m(struct dram_timing_info* info)
 	return TRUE;
 }
 
-unsigned int gf_get_ram_size(void)
+u64 gf_get_ram_size(void)
 {
-	int ret;
+	u64 ret;
 
 	if (som_eeprom.rom.loaded_status != ROM_LOADED)
 	{

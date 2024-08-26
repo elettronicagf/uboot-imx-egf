@@ -23,6 +23,6 @@ int gf_get_carrier_wid(char **buf);
 int gf_get_dts_name(char *buf);
 #ifdef CONFIG_SPL_BUILD
 int gf_read_dram_timings_mx8m(struct dram_timing_info* info);
-unsigned int gf_get_ram_size(void);
+u64 gf_get_ram_size(void);
 #endif
 #endif

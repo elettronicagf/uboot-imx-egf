@@ -65,10 +65,10 @@ int board_phys_sdram_size(phys_size_t *size)
 
 	dram_timing = (struct dram_timing_info *) CONFIG_SAVED_DRAM_TIMING_BASE;
 
+	*size = dram_timing->total_size;
 	if (!size)
 		return -EINVAL;
 
-	*size = dram_timing->total_size;
 	return 0;
 }
 
