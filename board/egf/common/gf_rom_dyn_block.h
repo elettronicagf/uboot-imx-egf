@@ -7,6 +7,7 @@
 
 #define DYN_BLOCK_MAC_ADDRESS_LEN 17
 #define DYN_BLOCK_RAM_SIZE_LEN	4
+#define DYN_BLOCK_RAM_SIZE_V2_LEN	8
 #define DYN_BLOCK_DTS_TO_LOAD_LEN 100
 
 enum dyn_block_ids {
@@ -36,6 +37,7 @@ enum dyn_block_ids {
 	DYN_BLOCK_WESTON_TOUCH_CAL,
 	DYN_BLOCK_DISP_MODEL,
 	DYN_BLOCK_DTS_TO_LOAD,
+	DYN_BLOCK_MX8M_RAM_SIZE_V2,
 };
 
 struct __attribute__((__packed__))  gf_rom_dyn_block_header {

@@ -1,3 +1,4 @@
+#include <inttypes.h>
 #include "gf_factory_data_rom.h"
 
 #define DEFINE_PRINT_UPDATE(x) gf_rom_field_print_##x, gf_rom_field_update_##x
@@ -378,25 +379,43 @@ void rom_get_wid(struct gf_factory_data_rom *rom, char **buf)
 	gf_rom_get_field_value_ascii(rom, FIELD_WID, buf);
 }
 
-unsigned int rom_get_ram_size(struct gf_factory_data_rom *rom)
+u64 rom_get_ram_size(struct gf_factory_data_rom *rom)
 {
 	int i,j;
-	unsigned int ret = 0;
+	u64 ret = 0;
 	gf_debug(6, "Total Block number: %d\n", rom->dyn_blocks_number);
 	for (i = 0; i < rom->dyn_blocks_number; i++)
 	{
 		gf_debug(6, "Block number: %d\n", i + 1);
-		if (rom->dyn_blocks[i].dyn_block_header->block_id == DYN_BLOCK_MX8M_RAM_SIZE)
+		if (rom->dyn_blocks[i].dyn_block_header->block_id == DYN_BLOCK_MX8M_RAM_SIZE_V2)
 		{
-			if (rom->dyn_blocks[i].dyn_block_header->block_len != DYN_BLOCK_RAM_SIZE_LEN)
-				gf_debug(0,"RAM size dyn block malformed. Expected len: 4 found %d\n", rom->dyn_blocks[i].dyn_block_header->block_len);
+			if (rom->dyn_blocks[i].dyn_block_header->block_len != DYN_BLOCK_RAM_SIZE_V2_LEN)
+				gf_debug(0,"RAM size dyn block malformed. Expected len: %d found %d\n", DYN_BLOCK_RAM_SIZE_V2_LEN, rom->dyn_blocks[i].dyn_block_header->block_len);
 			else
 			{
-				for (j = 0; j < DYN_BLOCK_RAM_SIZE_LEN; j++)
-					ret = ret | (rom->dyn_blocks[i].dyn_block_data[j]) << (j * 8);
+				// 64 bit
+				for (j = 0; j < DYN_BLOCK_RAM_SIZE_V2_LEN; j++)
+				{
+					ret = ret | ((u64)rom->dyn_blocks[i].dyn_block_data[j]) << (j * 8);
+				}
 				return ret;
 			}
 		}
+		if (rom->dyn_blocks[i].dyn_block_header->block_id == DYN_BLOCK_MX8M_RAM_SIZE)
+		{
+			if (rom->dyn_blocks[i].dyn_block_header->block_len != DYN_BLOCK_RAM_SIZE_LEN)
+				gf_debug(0,"RAM size dyn block malformed. Expected len: %d found %d\n", DYN_BLOCK_RAM_SIZE_LEN, rom->dyn_blocks[i].dyn_block_header->block_len);
+			else
+			{
+				// 32 bit
+				for (j = 0; j < DYN_BLOCK_RAM_SIZE_LEN; j++)
+				{
+					ret = ret | ((u64)rom->dyn_blocks[i].dyn_block_data[j]) << (j * 8);
+				}
+				return ret;
+			}
+		}
+
 	}
 	return 0;
 }
