@@ -213,7 +213,8 @@ int board_init(void)
 int board_late_init(void)
 {
 	char dts_name[100];
-	char mac_address[18];
+	char mac_address_1[18];
+	char mac_address_2[18];
 	int ret;
 
 #ifdef CONFIG_ENV_IS_IN_MMC
@@ -236,12 +237,21 @@ int board_late_init(void)
 	}
 
 	/* Get SoM MAC address from EEPROM */
-	ret = gf_get_mac_address_1(mac_address);
+	ret = gf_get_mac_address_1(mac_address_1);
 
 	if (ret == TRUE)
 	{
-		env_set("ethaddr", mac_address);
+		env_set("ethaddr", mac_address_1);
 	}
+
+	/* Get SoM MAC address 2 from EEPROM */
+	ret = gf_get_mac_address_2(mac_address_2);
+
+	if (ret == TRUE)
+	{
+		env_set("eth1addr", mac_address_2);
+	}
+
 
 	return 0;
 }
