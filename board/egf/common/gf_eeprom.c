@@ -188,6 +188,27 @@ int gf_get_mac_address_1(char *buf)
 	}
 }
 
+int gf_get_mac_address_2(char *buf)
+{
+	int ret;
+	if (som_eeprom.rom.loaded_status != ROM_LOADED)
+	{
+		gf_debug(0, "GF ROM: Error ROM not loaded!\n");
+		return FALSE;
+	}
+	ret = rom_get_mac_address_2(&(som_eeprom.rom), buf);
+	if (ret == TRUE)
+	{
+		printf("MAC Address 2 is %s\n", buf);
+		return TRUE;
+	}
+	else
+	{
+		printf("MAC Address 2 not found or invalid\n");
+		return FALSE;
+	}
+}
+
 
 int gf_get_dts_name(char *buf)
 {

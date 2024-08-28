@@ -19,6 +19,7 @@ struct i2c_eeprom {
 int gf_init_som_eeprom(u8 bus_num, u8 i2c_address);
 int gf_init_carrier_eeprom(u8 bus_num, u8 i2c_address);
 int gf_get_mac_address_1(char *buf);
+int gf_get_mac_address_2(char *buf);
 int gf_get_carrier_wid(char **buf);
 int gf_get_dts_name(char *buf);
 #ifdef CONFIG_SPL_BUILD
