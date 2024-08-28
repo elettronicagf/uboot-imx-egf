@@ -442,6 +442,28 @@ int rom_get_mac_address_1(struct gf_factory_data_rom *rom, char *buf)
 	return FALSE;
 }
 
+int rom_get_mac_address_2(struct gf_factory_data_rom *rom, char *buf)
+{
+	int i;
+	gf_debug(6, "Total Block number: %d\n", rom->dyn_blocks_number);
+	for (i = 0; i < rom->dyn_blocks_number; i++)
+	{
+		gf_debug(6, "Block number: %d\n", i + 1);
+		if (rom->dyn_blocks[i].dyn_block_header->block_id == DYN_BLOCK_MAC_ADDRESS_2)
+		{
+			if (rom->dyn_blocks[i].dyn_block_header->block_len != DYN_BLOCK_MAC_ADDRESS_LEN)
+				gf_debug(0,"MAC address dyn block malformed. Expected len: 17 found %d\n", rom->dyn_blocks[i].dyn_block_header->block_len);
+			else
+			{
+				strncpy(buf, (char *)rom->dyn_blocks[i].dyn_block_data, DYN_BLOCK_MAC_ADDRESS_LEN);
+				buf[DYN_BLOCK_MAC_ADDRESS_LEN] = 0;
+				return TRUE;
+			}
+		}
+	}
+	return FALSE;
+}
+
 int rom_get_dts_name(struct gf_factory_data_rom *rom, char *buf)
 {
 	int i;

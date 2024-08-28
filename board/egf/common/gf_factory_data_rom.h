@@ -84,6 +84,7 @@ int rom_calculate_checksum(struct gf_factory_data_rom *rom, u8 *cs);
 int rom_validate_checksum(struct gf_factory_data_rom *rom);
 void rom_get_wid(struct gf_factory_data_rom *rom, char **buf);
 int rom_get_mac_address_1(struct gf_factory_data_rom *rom, char *buf);
+int rom_get_mac_address_2(struct gf_factory_data_rom *rom, char *buf);
 u64 rom_get_ram_size(struct gf_factory_data_rom *rom);
 int rom_get_dts_name(struct gf_factory_data_rom *rom, char *buf);
 #endif
