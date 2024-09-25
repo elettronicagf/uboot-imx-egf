@@ -143,6 +143,18 @@
 				"echo WARN: Cannot load the DT; " \
 			"fi; " \
 		"fi;\0" \
+	"usbargs=setenv bootargs console=${console} quiet \0 " \
+	"loadfdt_usb=fatload usb 0 ${fdt_addr_r} ${fdtfile}\0" \
+	"loadimage_usb=fatload usb 0 ${loadaddr} ${image}\0" \
+	"usbboot=echo Searching for usb boot devices ...; " \
+		"if run loadfdt_usb; then " \
+			"if run loadimage_usb; then " \
+				"echo Booting from USB key; " \
+				"setenv usbargs ${usbargs} root=/dev/sda2 rootwait rw; " \
+				"run usbargs; " \
+				"booti ${loadaddr} - ${fdt_addr_r}; " \
+			"fi; " \
+		"fi;\0" \
 	"netargs=setenv bootargs ${jh_clk} ${mcore_clk} console=${console} " \
 		"root=/dev/nfs " \
 		"ip=dhcp nfsroot=${serverip}:${nfsroot},v3,tcp\0" \
@@ -164,6 +176,7 @@
 			"fi; " \
 		"fi;\0" \
 	"bsp_bootcmd=echo Running BSP bootcmd ...; " \
+		"run usbboot; " \
 		"mmc dev ${mmcdev}; if mmc rescan; then " \
 		   "if run loadbootscript; then " \
 			   "run bootscript; " \
