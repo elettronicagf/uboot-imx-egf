@@ -52,6 +52,7 @@ static iomux_v3_cfg_t const fec1_rst_pads[] = {
 
 static iomux_v3_cfg_t const eeprom_pads[] = {
 	MX8MP_PAD_SD1_RESET_B__GPIO2_IO10 | MUX_PAD_CTRL(PAD_CTL_DSE6 | PAD_CTL_HYS | PAD_CTL_PUE |PAD_CTL_PE),
+	MX8MP_PAD_SAI2_MCLK__GPIO4_IO27 | MUX_PAD_CTRL(PAD_CTL_DSE6 | PAD_CTL_HYS | PAD_CTL_PUE |PAD_CTL_PE),
 };
 
 static void my_i2c1_init_mux(void)
@@ -83,6 +84,7 @@ static void my_eeprom_init_mux(void)
 {
 	imx_iomux_v3_setup_multiple_pads(eeprom_pads, ARRAY_SIZE(eeprom_pads));
 	gpio_request(EEPROM_WP_GPIO, "EEPROM WP");
+	gpio_request(CARRIER_WP_GPIO, "CARRIER EEPROM WP");
 }
 
 void do_spl_pinmux(void)

@@ -54,6 +54,7 @@ static iomux_v3_cfg_t const power_enable_pads[] = {
 
 static iomux_v3_cfg_t const eeprom_pads[] = {
 	IMX8MM_PAD_GPIO1_IO00_GPIO1_IO0 | MUX_PAD_CTRL(PAD_CTL_DSE6 | PAD_CTL_HYS | PAD_CTL_PUE |PAD_CTL_PE),
+	IMX8MM_PAD_GPIO1_IO04_GPIO1_IO4 | MUX_PAD_CTRL(PAD_CTL_DSE6 | PAD_CTL_HYS | PAD_CTL_PUE |PAD_CTL_PE),
 };
 
 static iomux_v3_cfg_t const usb_pads[] = {
@@ -99,6 +100,7 @@ static void my_eeprom_init_mux(void)
 {
 	imx_iomux_v3_setup_multiple_pads(eeprom_pads, ARRAY_SIZE(eeprom_pads));
 	gpio_request(EEPROM_WP_GPIO, "EEPROM WP");
+	gpio_request(CARRIER_WP_GPIO, "CARRIER EEPROM WP");
 }
 
 static void my_usb_init_mux(void)

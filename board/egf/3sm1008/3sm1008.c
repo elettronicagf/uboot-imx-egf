@@ -133,11 +133,37 @@ int ft_board_setup(void *blob, struct bd_info *bd)
 }
 #endif
 
-int eeprom_write_enable(unsigned dev_addr, int state)
+int eeprom_write_enable(int eeprom_i2c_bus, unsigned dev_addr, int state)
 {
-	state == 1 ? gpio_direction_output(EEPROM_WP_GPIO, 0) : gpio_direction_output(EEPROM_WP_GPIO, 1);
+	if(eeprom_i2c_bus == I2C_SOM_EEPROM_BUS_NO && dev_addr == I2C_SOM_EEPROM_ADDR) {
+		// EEPROM on SoM 3SM1008
+		state == 1 ? gpio_direction_output(EEPROM_WP_GPIO, 0) : gpio_direction_output(EEPROM_WP_GPIO, 1);
+	} else if (eeprom_i2c_bus == I2C_CARRIER_EEPROM_BUS_NO && dev_addr == I2C_CARRIER_EEPROM_ADDR) {
+		// Eeprom on Carrier 0880
+		state == 1 ? gpio_direction_output(CARRIER_WP_GPIO, 0) : gpio_direction_output(CARRIER_WP_GPIO, 1);
+	} else if (eeprom_i2c_bus == I2C_DISPLAY_EEPROM_BUS_NO && dev_addr == I2C_DISPLAY_EEPROM_ADDR) {
+		// Eeprom on Display Adapter - Not protected
+		return 0;
+	}		
 	return 0;
 }
+
+// Return eeprom page_size in bytes
+unsigned eeprom_page_size(int eeprom_i2c_bus, unsigned dev_addr)
+{
+	if(eeprom_i2c_bus == I2C_SOM_EEPROM_BUS_NO && dev_addr == I2C_SOM_EEPROM_ADDR) {
+		// Eeprom on SoM 3SM1008
+		return 64;
+	} else if (eeprom_i2c_bus == I2C_CARRIER_EEPROM_BUS_NO && dev_addr == I2C_CARRIER_EEPROM_ADDR) {
+		// Eeprom on Carrier 0880
+		return 32;
+	} else if (eeprom_i2c_bus == I2C_DISPLAY_EEPROM_BUS_NO && dev_addr == I2C_DISPLAY_EEPROM_ADDR) {
+		// Eeprom on Display Adapter - Not protected
+		return 16;
+	}
+	return (1 << CONFIG_SYS_EEPROM_PAGE_WRITE_BITS);
+}
+
 
 int board_init(void)
 {
