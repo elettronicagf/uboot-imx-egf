@@ -31,16 +31,24 @@
 #define I2C_RXTX_LEN	128
 #endif
 
-#define	EEPROM_PAGE_SIZE	(1 << CONFIG_SYS_EEPROM_PAGE_WRITE_BITS)
-#define	EEPROM_PAGE_OFFSET(x)	((x) & (EEPROM_PAGE_SIZE - 1))
 
 #if CONFIG_IS_ENABLED(DM_I2C)
 static int eeprom_i2c_bus;
 #endif
 
-__weak int eeprom_write_enable(unsigned dev_addr, int state)
+__weak int eeprom_write_enable(int eeprom_i2c_bus, unsigned dev_addr, int state)
 {
 	return 0;
+}
+
+__weak unsigned eeprom_page_size(int eeprom_i2c_bus, unsigned dev_addr)
+{
+	return 1 << CONFIG_SYS_EEPROM_PAGE_WRITE_BITS;
+}
+
+unsigned eeprom_page_offset(int eeprom_i2c_bus, unsigned dev_addr, unsigned x)
+{
+	return (x & (eeprom_page_size(eeprom_i2c_bus, dev_addr) - 1));
 }
 
 void eeprom_init(int bus)
@@ -84,7 +92,7 @@ static int eeprom_addr(unsigned dev_addr, unsigned offset, uchar *addr)
 	return alen;
 }
 
-static int eeprom_len(unsigned offset, unsigned end)
+static int eeprom_len(unsigned dev_addr, unsigned offset, unsigned end)
 {
 	unsigned len = end - offset;
 
@@ -95,7 +103,7 @@ static int eeprom_len(unsigned offset, unsigned end)
 	 */
 #if !defined(CONFIG_SYS_I2C_FRAM)
 	unsigned blk_off = offset & 0xff;
-	unsigned maxlen = EEPROM_PAGE_SIZE - EEPROM_PAGE_OFFSET(blk_off);
+	unsigned maxlen = eeprom_page_size(eeprom_i2c_bus, dev_addr) - eeprom_page_offset(eeprom_i2c_bus, dev_addr, blk_off);
 
 	if (maxlen > I2C_RXTX_LEN)
 		maxlen = I2C_RXTX_LEN;
@@ -156,7 +164,7 @@ static int eeprom_rw(unsigned dev_addr, unsigned offset, uchar *buffer,
 	while (offset < end) {
 		alen = eeprom_addr(dev_addr, offset, addr);
 
-		len = eeprom_len(offset, end);
+		len = eeprom_len(dev_addr, offset, end);
 
 		rcode = eeprom_rw_block(offset, addr, alen, buffer, len, read);
 
@@ -187,7 +195,7 @@ int eeprom_write(unsigned dev_addr, unsigned offset,
 {
 	int ret;
 
-	eeprom_write_enable(dev_addr, 1);
+	eeprom_write_enable(eeprom_i2c_bus, dev_addr, 1);
 
 	/*
 	 * Write data until done or would cross a write page boundary.
@@ -196,7 +204,7 @@ int eeprom_write(unsigned dev_addr, unsigned offset,
 	 */
 	ret = eeprom_rw(dev_addr, offset, buffer, cnt, 0);
 
-	eeprom_write_enable(dev_addr, 0);
+	eeprom_write_enable(eeprom_i2c_bus, dev_addr, 0);
 	return ret;
 }
 
