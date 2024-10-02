@@ -1808,7 +1808,7 @@ struct dram_fsp_msg WID0800AB0101_ddr_dram_fsp_msg[] = {
 
 /* ddr timing config params */
 struct dram_timing_info dram_timing = {
-    .total_size = 0xFFFFFFFF,
+    .total_size = 0x100000000,
     .ddrc_cfg = WID0800AB0101_ddr_ddrc_cfg,
     .ddrc_cfg_num = ARRAY_SIZE(WID0800AB0101_ddr_ddrc_cfg),
     .ddrphy_cfg = WID0800AB0101_ddr_ddrphy_cfg,
