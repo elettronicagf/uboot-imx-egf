@@ -445,6 +445,12 @@ config CMD_BOOTMENU
 	help
 	  Add an ANSI terminal boot menu command.
 
+
+config CMD_EGF_UPDATE
+	bool "egf_update"
+	help
+	  Add egf update management commands.
+
 config CMD_ADTIMG
 	bool "adtimg"
 	help
