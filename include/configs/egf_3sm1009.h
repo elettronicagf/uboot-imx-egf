@@ -66,6 +66,10 @@
 	"emmc_dev=2\0"\
 	"sd_dev=1\0"
 
+#define CONFIG_UPDATE_PACKAGE_HEADER_LENGTH 36
+#define CONFIG_UPDATE_PACKAGE_LOADADDR 0x44000000 
+#define CONFIG_UPDATE_PACKAGE_INITIAL_LOAD_LENGTH 0x4000064
+#define CONFIG_UPDATE_FAT_START_OFFSET	0x44000024
 
 #ifdef CONFIG_NAND_BOOT
 #define MFG_NAND_PARTITION "mtdparts=gpmi-nand:64m(nandboot),16m(nandfit),64m(nandkernel),16m(nanddtb),8m(nandtee),-(nandrootfs)"
@@ -78,6 +82,7 @@
 	"splashimage=0x50000000\0" \
 	"fdt_addr_r=0x43000000\0"			\
 	"fdt_addr=0x43000000\0"			\
+	"fdt_addr_update=0x43500000\0" \
 	"fdt_high=0xffffffffffffffff\0" \
 	"mtdparts=" MFG_NAND_PARTITION "\0" \
 	"console=ttymxc1,115200 earlycon=ec_imx6q,0x30890000,115200\0" \
@@ -104,6 +109,7 @@
 	"console=ttymxc1,115200\0" \
 	"fdt_addr_r=0x43000000\0"			\
 	"fdt_addr=0x43000000\0"			\
+	"fdt_addr_update=0x43500000\0" \
 	"boot_fdt=try\0" \
 	"fdt_high=0xffffffffffffffff\0"		\
 	"boot_fit=no\0" \
@@ -143,6 +149,27 @@
 				"booti ${loadaddr} - ${fdt_addr_r}; " \
 			"fi; " \
 		"fi;\0" \
+	"usbupdate_args=setenv bootargs console=${console} update_md5=${update_md5}\0" \
+	"loadupdatepackage_usb=fatload usb 0 " __stringify(CONFIG_UPDATE_PACKAGE_LOADADDR) " update.eup " __stringify(CONFIG_UPDATE_PACKAGE_INITIAL_LOAD_LENGTH) "\0" \
+	"check_update_header=egf_update_validate_header " __stringify(CONFIG_UPDATE_PACKAGE_LOADADDR) "\0" \
+	"loadfdt_update=fatload blkmap  0 ${fdt_addr_update} ${fdtfile}\0" \
+	"loadimage_update=fatload blkmap  0 ${loadaddr} ${image}\0" \
+	"usbboot_update=echo Searching for update ...; " \
+		"usb start; " \
+		"if run loadupdatepackage_usb; then " \
+			"echo Found an update package file on usb_key; " \
+			"if run check_update_header; then " \
+				"echo Update package signature verified; " \
+				"blkmap create myfat; " \
+				"blkmap map myfat 0 0x20000 mem " __stringify(CONFIG_UPDATE_FAT_START_OFFSET) "; " \
+				"if run loadfdt_update; then " \
+					"if run loadimage_update; then " \
+						"run usbupdate_args; " \
+						"booti ${loadaddr} - ${fdt_addr_update};" \
+					"fi; " \
+				"fi; " \
+			"fi; " \
+		"fi;\0" \
 	"netargs=setenv bootargs ${jh_clk} ${mcore_clk} console=${console} " \
 		"root=/dev/nfs " \
 		"ip=dhcp nfsroot=${serverip}:${nfsroot},v3,tcp\0" \
@@ -165,6 +192,7 @@
 		"fi;\0" \
 	"bsp_bootcmd=echo Running BSP bootcmd ...; " \
 		"run usbboot; " \
+		"run usbboot_update; " \
 		"mmc dev ${mmcdev}; if mmc rescan; then " \
 		   "if run loadbootscript; then " \
 			   "run bootscript; " \

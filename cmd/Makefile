@@ -11,6 +11,9 @@ obj-$(CONFIG_CMD_HELP) += help.o
 obj-y += panic.o
 obj-y += version.o
 
+# eGF Unified Update System
+obj-$(CONFIG_CMD_EGF_UPDATE) += egf_update.o
+
 # command
 obj-$(CONFIG_CMD_ARMFFA) += armffa.o
 obj-$(CONFIG_CMD_2048) += 2048.o
