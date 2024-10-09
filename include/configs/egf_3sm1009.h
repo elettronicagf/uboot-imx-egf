@@ -109,7 +109,7 @@
 	"console=ttymxc1,115200\0" \
 	"fdt_addr_r=0x43000000\0"			\
 	"fdt_addr=0x43000000\0"			\
-	"fdt_addr_update=0x43500000\0" \
+	"fdt_addr_update=0x44000000\0" \
 	"boot_fdt=try\0" \
 	"fdt_high=0xffffffffffffffff\0"		\
 	"boot_fit=no\0" \
