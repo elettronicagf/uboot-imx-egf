@@ -1,0 +1,34 @@
+if TARGET_EGF_3SM1010
+
+config SYS_BOARD
+	default "3sm1010"
+
+config SYS_VENDOR
+	default "egf"
+
+config SYS_CONFIG_NAME
+	default "egf_3sm1010"
+
+config IMX_CONFIG
+	default "arch/arm/mach-imx/imx9/imximage.cfg"
+
+config MFG_EMB_DDR
+	bool "Force embedded DDR Memory timings without reading EEPROM"
+	default n
+
+config 3SM1010_LPDDR4X
+	bool "Using LPDDR4X Timing and PMIC voltage"
+	default y
+	select IMX9_LPDDR4X
+	help
+	  Select the LPDDR4X timing and 0.6V VDDQ
+
+choice MFG_WID_OPTIONS
+	prompt "Select WID to force embedded DDR timings"
+	depends on MFG_EMB_DDR
+
+	config FORCE_WID0820AA0101
+		bool "Select WID0820_AA01.01"
+endchoice
+
+endif
