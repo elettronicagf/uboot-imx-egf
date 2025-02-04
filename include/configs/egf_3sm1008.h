@@ -130,7 +130,7 @@
 	"bootm_size=0x10000000\0" \
 	"mmcdev=2\0" \
 	"mmcpart=1\0" \
-	"mmcroot=/dev/mmcblk2p2 rootwait rw\0" \
+	"mmcroot=/dev/mmcblk2p2 rootwait rw quiet \0" \
 	"mmcautodetect=yes\0" \
 	"mmcargs=setenv bootargs ${jh_clk} ${mcore_clk} console=${console} root=${mmcroot}\0 " \
 	"loadbootscript=fatload mmc ${mmcdev}:${mmcpart} ${loadaddr} ${bsp_script};\0" \
@@ -153,6 +153,7 @@
 	"loadfdt_usb=fatload usb 0 ${fdt_addr_r} ${fdtfile}\0" \
 	"loadimage_usb=fatload usb 0 ${loadaddr} ${image}\0" \
 	"usbboot=echo Searching for usb boot devices ...; " \
+		"usb start; " \
 		"if run loadfdt_usb; then " \
 			"if run loadimage_usb; then " \
 				"echo Booting from USB key; " \
