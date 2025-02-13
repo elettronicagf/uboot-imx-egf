@@ -1,0 +1,7 @@
+i.MX93 NEI000X0 BOARD
+M:	Dario Scarpa <dario.scarpa@maselettronica.com>
+S:	Maintained
+F:	board/fmaselettronica/imx93_nei000x0/
+F:	include/configs/imx93_nei000x0.h
+F:	configs/imx93_nei000x0_defconfig
+F:	configs/imx93_nei000x0_emmc_defconfig
