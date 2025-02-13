@@ -1183,21 +1183,24 @@ dtb-$(CONFIG_ARCH_IMX8M) += \
 	imx8mq-kontron-pitx-imx8m.dtb \
 	imx8mq-librem5-r4.dtb
 
+#dtb-$(CONFIG_ARCH_IMX9) += \
+#	imx95-15x15-evk.dtb \
+#	imx95-19x19-evk.dtb \
+#	imx95-19x19-verdin.dtb \
+#	imx91-11x11-evk.dtb \
+#	imx91-9x9-qsb.dtb \
+#	imx91-11x11-evk-spinand.dtb \
+#	imx91-11x11-evk-tianma-wvga-panel.dtb \
+#	imx93-11x11-evk.dtb \
+#	imx93-11x11-evk-pmic-pf0900.dtb \
+#	imx93-14x14-evk.dtb \
+#	imx93-9x9-qsb.dtb \
+#	imx93-9x9-qsb-tianma-wvga-panel.dtb \
+#	imx93-var-som-symphony.dtb \
+#	imx93-phyboard-segin.dtb
+	
 dtb-$(CONFIG_ARCH_IMX9) += \
-	imx95-15x15-evk.dtb \
-	imx95-19x19-evk.dtb \
-	imx95-19x19-verdin.dtb \
-	imx91-11x11-evk.dtb \
-	imx91-9x9-qsb.dtb \
-	imx91-11x11-evk-spinand.dtb \
-	imx91-11x11-evk-tianma-wvga-panel.dtb \
-	imx93-11x11-evk.dtb \
-	imx93-11x11-evk-pmic-pf0900.dtb \
-	imx93-14x14-evk.dtb \
-	imx93-9x9-qsb.dtb \
-	imx93-9x9-qsb-tianma-wvga-panel.dtb \
-	imx93-var-som-symphony.dtb \
-	imx93-phyboard-segin.dtb
+	imx93-nei000x0.dtb
 
 dtb-$(CONFIG_ARCH_IMXRT) += imxrt1050-evk.dtb \
 	imxrt1020-evk.dtb \
