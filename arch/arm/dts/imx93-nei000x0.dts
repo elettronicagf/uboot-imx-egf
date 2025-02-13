@@ -1,0 +1,37 @@
+// SPDX-License-Identifier: (GPL-2.0+ OR MIT)
+/*
+ * Copyright 2022 NXP
+ */
+
+/dts-v1/;
+
+#include "imx93.dtsi"
+#include "imx93-nei000x0-osm.dtsi"
+#include "imx93-nei000x0-adapter.dtsi"
+#include "imx93-nei000x0-carrier.dtsi"
+
+/ {
+	model = "MAS i.MX93 NEITH000X0 board";
+	compatible = "fsl,imx93-nei000x0", "fsl,imx93";
+
+	chosen {
+		bootargs = "console=ttyLP0,115200";
+		stdout-path = &lpuart1;
+	};
+
+	reserved-memory {
+		#address-cells = <2>;
+		#size-cells = <2>;
+		ranges;
+
+		linux,cma {
+			compatible = "shared-dma-pool";
+			reusable;
+			alloc-ranges = <0 0x80000000 0 0x40000000>;
+			size = <0 0x10000000>;
+			linux,cma-default;
+		};
+	};
+
+};
+
