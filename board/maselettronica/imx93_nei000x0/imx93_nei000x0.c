@@ -399,6 +399,58 @@ void adapter_usbhub_rst(int val) {
 	dm_gpio_free(desc.dev, &desc);
 }
 
+// function: manage reset gpio for touchscreen GT928
+void panellvds_touch_res(int val) {
+
+	struct gpio_desc desc;
+	int ret;
+
+	ret = dm_gpio_lookup_name("GPIO2_23", &desc);
+	if (ret) {
+		printf("GPIO2_23: TOUCH_RST not found\n");
+		return;
+	}
+
+	ret = dm_gpio_request(&desc, "TOUCH_RST");
+	if (ret) {
+		printf("GPIO request fail\n");
+		return;
+	}
+
+	dm_gpio_set_dir_flags(&desc, GPIOD_IS_OUT);
+
+	if (val) dm_gpio_set_value(&desc, 1);
+	else dm_gpio_set_value(&desc, 0);
+
+	dm_gpio_free(desc.dev, &desc);
+}
+
+// function: manage interrupt gpio for touchscreen GT928
+void panellvds_touch_int(int val) {
+
+	struct gpio_desc desc;
+	int ret;
+
+	ret = dm_gpio_lookup_name("GPIO1_14", &desc);
+	if (ret) {
+		printf("GPIO1_14: TOUCH_INT not found\n");
+		return;
+	}
+
+	ret = dm_gpio_request(&desc, "TOUCH_INT");
+	if (ret) {
+		printf("GPIO request fail\n");
+		return;
+	}
+
+	dm_gpio_set_dir_flags(&desc, GPIOD_IS_OUT);
+
+	if (val) dm_gpio_set_value(&desc, 1);
+	else dm_gpio_set_value(&desc, 0);
+
+	dm_gpio_free(desc.dev, &desc);
+}
+
 int board_init(void)
 {
 #ifdef CONFIG_USB_TCPC
@@ -420,6 +472,12 @@ int board_init(void)
 
 	if (IS_ENABLED(CONFIG_FEC_MXC))
 		setup_fec();
+
+	// setup i2c address for GT928 to 0x5d
+	panellvds_touch_res(0);
+	panellvds_touch_int(0);
+	udelay(100);
+	panellvds_touch_res(1);
 
 	return 0;
 }
