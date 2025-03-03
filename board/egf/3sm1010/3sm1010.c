@@ -64,6 +64,63 @@ int board_phy_config(struct phy_device *phydev)
 	return 0;
 }
 
+#define I2C_PCA6408_BUS_NUM 1
+#define I2C_PCA6408_ADDR 0x21
+#define EEPROM_SOM_WP_GPIO_INDEX 6
+
+int eeprom_write_enable(int eeprom_i2c_bus, unsigned dev_addr, int state)
+{
+	struct udevice *dev;
+	int bus_num = I2C_PCA6408_BUS_NUM;
+	int ret;
+	u8 tmp;
+
+	ret = i2c_get_chip_for_busnum(bus_num, I2C_PCA6408_ADDR,
+				      1, &dev);
+
+	dm_i2c_read(dev, 3, &tmp, 1);
+	if(tmp & (1 << EEPROM_SOM_WP_GPIO_INDEX))
+
+	tmp = 
+	dm_i2c_write(dev, 3, &tmp, 1);
+
+
+	dm_i2c_read(dev, 0, &tmp, 1);
+
+
+	if(eeprom_i2c_bus == I2C_SOM_EEPROM_BUS_NO && dev_addr == I2C_SOM_EEPROM_ADDR) {
+		// EEPROM on SoM 3SM1008
+		state == 1 ? gpio_direction_output(EEPROM_WP_GPIO, 0) : gpio_direction_output(EEPROM_WP_GPIO, 1);
+	} else if (eeprom_i2c_bus == I2C_CARRIER_EEPROM_BUS_NO && dev_addr == I2C_CARRIER_EEPROM_ADDR) {
+		// Eeprom on Carrier 0880
+		state == 1 ? gpio_direction_output(CARRIER_WP_GPIO, 0) : gpio_direction_output(CARRIER_WP_GPIO, 1);
+	} else if (eeprom_i2c_bus == I2C_DISPLAY_EEPROM_BUS_NO && dev_addr == I2C_DISPLAY_EEPROM_ADDR) {
+		// Eeprom on Display Adapter - Not protected
+		return 0;
+	}	
+
+		tmp &= 0x7;
+		tmp = ((tmp & 1) << 2) | (tmp & 2) | ((tmp & 4) >> 2);
+
+	return 0;
+}
+
+// Return eeprom page_size in bytes
+unsigned eeprom_page_size(int eeprom_i2c_bus, unsigned dev_addr)
+{
+	if(eeprom_i2c_bus == I2C_SOM_EEPROM_BUS_NO && dev_addr == I2C_SOM_EEPROM_ADDR) {
+		// Eeprom on SoM 3SM1008
+		return 64;
+	} else if (eeprom_i2c_bus == I2C_CARRIER_EEPROM_BUS_NO && dev_addr == I2C_CARRIER_EEPROM_ADDR) {
+		// Eeprom on Carrier 0880
+		return 32;
+	} else if (eeprom_i2c_bus == I2C_DISPLAY_EEPROM_BUS_NO && dev_addr == I2C_DISPLAY_EEPROM_ADDR) {
+		// Eeprom on Display Adapter - Not protected
+		return 16;
+	}
+	return (1 << CONFIG_SYS_EEPROM_PAGE_WRITE_BITS);
+}
+
 
 
 int board_init(void)
