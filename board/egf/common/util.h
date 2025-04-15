@@ -3,7 +3,6 @@
 
 #include <common.h>
 #include <asm/io.h>
-#include <asm/gpio.h>
 #include <asm/types.h>
 #include <i2c.h>
 #include <dm.h>
