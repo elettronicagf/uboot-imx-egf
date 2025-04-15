@@ -9,5 +9,5 @@ obj-y += gf_mux.o
 
 ifdef CONFIG_SPL_BUILD
 obj-y += spl.o
-obj-y += lpddr4x_timing_wid0820aa0101.o
+obj-$(CONFIG_FORCE_WID0820AA0101) += lpddr4x_timing_wid0820aa0101.o
 endif
