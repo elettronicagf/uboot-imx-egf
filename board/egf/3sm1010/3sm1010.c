@@ -20,6 +20,8 @@
 #include <usb.h>
 #include <dwc3-uboot.h>
 #include <asm/gpio.h>
+#include "../common/gf_eeprom.h"
+#include "gf_mux.h"
 
 DECLARE_GLOBAL_DATA_PTR;
 
@@ -48,6 +50,14 @@ struct efi_capsule_update_info update_info = {
 int board_early_init_f(void)
 {
 
+	return 0;
+}
+
+int board_phys_sdram_size(phys_size_t *size)
+{
+	/* Read SDRAM size from the RAM address where it was written by SPL */
+	u64 * total_dram_size = (u64 *) CONFIG_SAVED_DRAM_SIZE_BASE;
+	*size = *total_dram_size;
 	return 0;
 }
 

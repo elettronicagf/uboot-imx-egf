@@ -36,6 +36,7 @@
 #include <power/pf0900.h>
 #include <asm/arch/trdc.h>
 #include "gf_mux.h"
+#include "../common/gf_eeprom.h"
 
 DECLARE_GLOBAL_DATA_PTR;
 
@@ -71,14 +72,29 @@ void spl_board_init(void)
 extern struct dram_timing_info dram_timing;
 void spl_dram_init(void)
 {
-	struct dram_timing_info *ptiming = &dram_timing;
-#if IS_ENABLED(CONFIG_IMX93_EVK_LPDDR4X)
-	if (is_voltage_mode(VOLT_LOW_DRIVE))
-		ptiming = &dram_timing_1866mts;
+#ifndef CONFIG_MFG_EMB_DDR
+	int ret;
+	struct dram_timing_info my_timings;
+	ret = gf_read_dram_timings_mx8m(&my_timings);
+	if (ret == FALSE)
+	{
+		printf("Fatal error while loading DDR timings from ROM\n");
+		printf("Stopping boot\n");
+		hang();
+	}
+	else
+	{
+		printf("Using GF ROM DDR timings\n");
+		ddr_init(&my_timings);
+	}
+#else
+	printf("Using integrated timings for forced WID\n");
+	ddr_init(&dram_timing);
 #endif
 
-	printf("DDR: %uMTS\n", ptiming->fsp_msg[0].drate);
-	ddr_init(ptiming);
+	/* Save RAM size to a fixed address, for u-boot */
+	u64 * total_dram_size = (u64 *) CONFIG_SAVED_DRAM_SIZE_BASE;
+	*total_dram_size = my_timings.total_size;
 }
 
 #if CONFIG_IS_ENABLED(DM_PMIC_PF0900)
@@ -249,6 +265,9 @@ void board_init_f(ulong dummy)
 
 	/* Setup TRDC for DDR access */
 	trdc_init();
+
+	/* GF Configuration Eeprom initialization */
+	gf_init_som_eeprom(I2C_SOM_EEPROM_BUS_NO, I2C_SOM_EEPROM_ADDR);
 
 	/* DDR initialization */
 	spl_dram_init();
