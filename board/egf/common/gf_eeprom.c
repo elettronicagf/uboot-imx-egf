@@ -69,15 +69,24 @@ static int eeprom_identify(struct i2c_eeprom *eep)
 static int eeprom_read(struct i2c_eeprom *eep)
 {
 	int ret;
+	int index;
 	gf_debug(3,"EEPROM reading %d bytes starting from offset 0x%x\n", eep->rom.len, GF_EEPROM_BASE_OFFSET);
 #if CONFIG_IS_ENABLED(DM_I2C)
+/* LPI2C has a maximum transfer size of 256 byte*/
+#ifdef CONFIG_SYS_I2C_IMX_LPI2C
+	printf("LPI2C controller detected: limit transfer size to 256 byte\n");
+	for (index = 0; index < eep->rom.len / 256; index++)
+		ret = dm_i2c_read(eep->i2c_dev, GF_EEPROM_BASE_OFFSET + index * 256, eep->rom.raw_content + 256 * index, 256);
+	ret = dm_i2c_read(eep->i2c_dev, GF_EEPROM_BASE_OFFSET + index * 256, eep->rom.raw_content + 256 * index, eep->rom.len - 256 * index);
+#else
 	ret = dm_i2c_read(eep->i2c_dev, GF_EEPROM_BASE_OFFSET, eep->rom.raw_content, eep->rom.len);
+#endif
 #else
 	ret = i2c_read(eep->i2c_address, GF_EEPROM_BASE_OFFSET, eep->address_len, eep->rom.raw_content, eep->rom.len);
 #endif
 	if (ret != 0)
 	{
-		gf_debug(0,"EEPROM read error\n");
+		gf_debug(0,"EEPROM read error %d\n", ret);
 		return FALSE;
 	}
 	return TRUE;
