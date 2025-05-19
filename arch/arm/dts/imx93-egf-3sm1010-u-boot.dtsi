@@ -115,6 +115,10 @@
 	bootph-pre-ram;
 };
 
+&lpi2c2 {
+	bootph-pre-ram;
+};
+
 
 &{/soc@0/bus@44000000/i2c@44340000/pmic@25} {
 	bootph-pre-ram;
@@ -125,6 +129,10 @@
 };
 
 &pinctrl_lpi2c1 {
+	bootph-pre-ram;
+};
+
+&pinctrl_lpi2c2 {
 	bootph-pre-ram;
 };
 
