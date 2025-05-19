@@ -202,14 +202,13 @@ int eeprom_write_enable(int eeprom_i2c_bus, unsigned dev_addr, int state)
 	if(eeprom_i2c_bus == I2C_SOM_EEPROM_BUS_NO && dev_addr == I2C_SOM_EEPROM_ADDR) {
 		// EEPROM on SoM 3SM1008
 		state == 1 ? set_tca6408_gpio(EEPROM_SOM_WP_GPIO_INDEX, 0) : set_tca6408_gpio(EEPROM_SOM_WP_GPIO_INDEX, 1);
-	} /*else if (eeprom_i2c_bus == I2C_CARRIER_EEPROM_BUS_NO && dev_addr == I2C_CARRIER_EEPROM_ADDR) {
+	} else if (eeprom_i2c_bus == I2C_CARRIER_EEPROM_BUS_NO && dev_addr == I2C_CARRIER_EEPROM_ADDR) {
 		// Eeprom on Carrier 0880
-		state == 1 ? gpio_direction_output(CARRIER_WP_GPIO, 0) : gpio_direction_output(CARRIER_WP_GPIO, 1);
+		state == 1 ? set_pcal6416_gpio(EEPROM_CARRIER_WP_GPIO_PORT, EEPROM_CARRIER_WP_GPIO_INDEX, 0) : set_pcal6416_gpio(EEPROM_CARRIER_WP_GPIO_PORT, EEPROM_CARRIER_WP_GPIO_INDEX, 1);
 	} else if (eeprom_i2c_bus == I2C_DISPLAY_EEPROM_BUS_NO && dev_addr == I2C_DISPLAY_EEPROM_ADDR) {
 		// Eeprom on Display Adapter - Not protected
 		return 0;
 	}	
-*/
 	return 0;
 }
 
@@ -219,13 +218,13 @@ unsigned eeprom_page_size(int eeprom_i2c_bus, unsigned dev_addr)
 	if(eeprom_i2c_bus == I2C_SOM_EEPROM_BUS_NO && dev_addr == I2C_SOM_EEPROM_ADDR) {
 		// Eeprom on SoM 3SM1008
 		return 32;
-	} /*else if (eeprom_i2c_bus == I2C_CARRIER_EEPROM_BUS_NO && dev_addr == I2C_CARRIER_EEPROM_ADDR) {
+	} else if (eeprom_i2c_bus == I2C_CARRIER_EEPROM_BUS_NO && dev_addr == I2C_CARRIER_EEPROM_ADDR) {
 		// Eeprom on Carrier 0880
 		return 32;
 	} else if (eeprom_i2c_bus == I2C_DISPLAY_EEPROM_BUS_NO && dev_addr == I2C_DISPLAY_EEPROM_ADDR) {
 		// Eeprom on Display Adapter - Not protected
 		return 16;
-	}*/
+	}
 	return (1 << CONFIG_SYS_EEPROM_PAGE_WRITE_BITS);
 }
 
@@ -241,19 +240,52 @@ int board_init(void)
 
 int board_late_init(void)
 {
-#ifdef CONFIG_ENV_IS_IN_MMC
-	board_late_mmc_env_init();
-#endif
+	char dts_name[100];
+	char mac_address[18];
+	char mac_address_2[18];
+	int ret;
 
-	env_set("sec_boot", "no");
-#ifdef CONFIG_AHAB_BOOT
-	env_set("sec_boot", "yes");
-#endif
+	#ifdef CONFIG_ENV_IS_IN_MMC
+		board_late_mmc_env_init();
+	#endif
 
-#ifdef CONFIG_ENV_VARS_UBOOT_RUNTIME_CONFIG
-	env_set("board_name", "11X11_EVK");
-	env_set("board_rev", "iMX93");
-#endif
+		env_set("sec_boot", "no");
+	#ifdef CONFIG_AHAB_BOOT
+		env_set("sec_boot", "yes");
+	#endif
+
+	#ifdef CONFIG_ENV_VARS_UBOOT_RUNTIME_CONFIG
+		env_set("board_name", "eGF 3SM1010");
+		env_set("board_rev", "iMX93");
+	#endif
+
+	gf_init_som_eeprom(I2C_SOM_EEPROM_BUS_NO, I2C_SOM_EEPROM_ADDR);
+	gf_init_carrier_eeprom(I2C_CARRIER_EEPROM_BUS_NO, I2C_CARRIER_EEPROM_ADDR);
+
+	/* Get DTS to load name from EEPROM */
+	ret = gf_get_dts_name(dts_name);
+
+	if (ret == TRUE)
+	{
+		env_set("fdtfile", strcat(dts_name, ".dtb"));
+	}
+
+	/* Get SoM MAC address from EEPROM */
+	ret = gf_get_mac_address_1(mac_address);
+
+	if (ret == TRUE)
+	{
+		env_set("ethaddr", mac_address);
+	}
+
+	/* Get SoM MAC address 2 from EEPROM */
+	ret = gf_get_mac_address_2(mac_address_2);
+
+	if (ret == TRUE)
+	{
+		env_set("eth1addr", mac_address_2);
+	}
+
 	return 0;
 }
 
