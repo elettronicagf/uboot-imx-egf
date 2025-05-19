@@ -84,10 +84,69 @@ int board_phy_config(struct phy_device *phydev)
 #define I2C_TCA6408_INVERSION_REG 2
 #define I2C_TCA6408_CONFIGURATION_REG 3
 
-#define EEPROM_SOM_WP_GPIO_INDEX 6
+#define I2C_PCAL6416_BUS_NUM 0
+#define I2C_PCAL6416_ADDR 0x20
+#define I2C_PCAL6416_INPUTPORT_0_REG 0
+#define I2C_PCAL6416_INPUTPORT_1_REG 1
+#define I2C_PCAL6416_OUTPUTPORT_0_REG 2
+#define I2C_PCAL6416_OUTPUTPORT_1_REG 3
+#define I2C_PCAL6416_CONFIGURATION_0_REG 6
+#define I2C_PCAL6416_CONFIGURATION_1_REG 7
 
-#define I2C_SOM_EEPROM_BUS_NO 0
-#define I2C_SOM_EEPROM_ADDR 0x50
+int set_pcal6416_gpio(int gpio_port, int gpio_num, int value)
+{
+	struct udevice *dev;
+	int bus_num = I2C_PCAL6416_BUS_NUM;
+	int ret, output_port_reg, configuration_reg;
+	u8 tmp_config, tmp_output;
+	u8 gpio_bit_mask = (1 << (gpio_num));
+	ret = i2c_get_chip_for_busnum(bus_num, I2C_PCAL6416_ADDR, 1, &dev);
+	if(ret) {
+		errf(ret);
+		return ret;
+	}
+
+	if(gpio_port==0){
+		output_port_reg = I2C_PCAL6416_OUTPUTPORT_0_REG;
+		configuration_reg = I2C_PCAL6416_CONFIGURATION_0_REG;
+
+	} else {
+		output_port_reg = I2C_PCAL6416_OUTPUTPORT_1_REG;
+		configuration_reg = I2C_PCAL6416_CONFIGURATION_1_REG;
+	}
+	
+	//Set GPIO as output
+	ret = dm_i2c_read(dev, configuration_reg, &tmp_config, 1);
+	if(ret) {
+		errf(ret);
+		return ret;
+	}
+	tmp_config &= ~gpio_bit_mask;
+	ret = dm_i2c_write(dev, configuration_reg, &tmp_config, 1);
+	if(ret) {
+		errf(ret);
+		return ret;
+	}
+
+	//Set pin value
+	ret = dm_i2c_read(dev, output_port_reg, &tmp_output, 1);
+	if(ret) {
+		errf(ret);
+		return ret;
+	}
+	if(value == 0){
+		tmp_output &= ~gpio_bit_mask;
+	} else {
+		tmp_output |= gpio_bit_mask;
+	}
+	ret = dm_i2c_write(dev, output_port_reg, &tmp_output, 1);
+	if(ret) {
+		errf(ret);
+		return ret;
+	}
+
+	return 0;
+}
 
 int set_tca6408_gpio(int gpio_num, int value)
 {
