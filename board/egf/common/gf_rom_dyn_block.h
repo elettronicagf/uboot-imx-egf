@@ -2,7 +2,6 @@
 #define _DYN_BLOCK_
 #include <common.h>
 #include <asm/io.h>
-#include <asm/gpio.h>
 #include <asm/types.h>
 
 #define DYN_BLOCK_MAC_ADDRESS_LEN 17
@@ -38,6 +37,7 @@ enum dyn_block_ids {
 	DYN_BLOCK_DISP_MODEL,
 	DYN_BLOCK_DTS_TO_LOAD,
 	DYN_BLOCK_MX8M_RAM_SIZE_V2,
+	DYN_BLOCK_MX8M_RAM_FSP_CFG,
 };
 
 struct __attribute__((__packed__))  gf_rom_dyn_block_header {
