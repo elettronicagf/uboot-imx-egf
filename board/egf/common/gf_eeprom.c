@@ -69,11 +69,11 @@ static int eeprom_identify(struct i2c_eeprom *eep)
 static int eeprom_read(struct i2c_eeprom *eep)
 {
 	int ret;
-	int index;
 	gf_debug(3,"EEPROM reading %d bytes starting from offset 0x%x\n", eep->rom.len, GF_EEPROM_BASE_OFFSET);
 #if CONFIG_IS_ENABLED(DM_I2C)
 /* LPI2C has a maximum transfer size of 256 byte*/
 #ifdef CONFIG_SYS_I2C_IMX_LPI2C
+	int index;
 	printf("LPI2C controller detected: limit transfer size to 256 byte\n");
 	for (index = 0; index < eep->rom.len / 256; index++)
 		ret = dm_i2c_read(eep->i2c_dev, GF_EEPROM_BASE_OFFSET + index * 256, eep->rom.raw_content + 256 * index, 256);
@@ -279,7 +279,6 @@ int gf_read_dram_timings_mx8m(struct dram_timing_info* info)
 	}
 
 	info->total_size = rom_get_ram_size(&(som_eeprom.rom));
-	gf_debug(3, "RAM size is %x\n", info->total_size);
 
 	/* DDRC_CFG */
 	ret = rom_get_dyn_block(&(som_eeprom.rom), DYN_BLOCK_MX8M_RAM_DDRC_CFG, &block_len, &data);
@@ -302,7 +301,7 @@ int gf_read_dram_timings_mx8m(struct dram_timing_info* info)
 	/* END OF DDRC_CFG */
 	
 	/* FSP_CFG */
-	
+#ifdef CONFIG_ARCH_IMX9
 	ret = rom_get_dyn_block(&(som_eeprom.rom), DYN_BLOCK_MX8M_RAM_FSP_CFG, &block_len, &data);
 	gf_debug(5, "Read %d bytes for FSP_CFG\n", block_len);
 	if (ret == FALSE)
@@ -315,7 +314,7 @@ int gf_read_dram_timings_mx8m(struct dram_timing_info* info)
 		gf_debug(5, "FSP_CFG size is %d\n", info->fsp_cfg_num);
 	}	
 	/* END OF FSP_CFG */
-
+#endif
 	/* DDRPHY_CFG */
 	ret = rom_get_dyn_block(&(som_eeprom.rom), DYN_BLOCK_MX8M_RAM_DDRPHY_CFG, &block_len, &data);
 	if (ret == FALSE)
