@@ -1,9 +1,9 @@
 /*
- * Copyright 2024 NXP
+ * Copyright 2025 NXP
  *
  * SPDX-License-Identifier: BSD-3-Clause
  *
- * Code generated with DDR Tool v3.4.0_8.3-e3369a1a.
+ * Code generated with DDR Tool v3.5.0_8.4-1ddf053d.
  * DDR PHY FW2022.01
  */
 
@@ -13,12 +13,12 @@
 /* Initialize DDRC registers */
 static struct dram_cfg_param ddr_ddrc_cfg[] = {
     {0x4e300110, 0x44100001},
-    {0x4e300000, 0x8000df},
+    {0x4e300000, 0x8000ff},
     {0x4e300008, 0x0},
     {0x4e300080, 0x80000512},
     {0x4e300084, 0x0},
     {0x4e300114, 0x1002},
-    {0x4e300260, 0x88},
+    {0x4e300260, 0x80},
     {0x4e300f04, 0x80},
     {0x4e300800, 0x43b30002},
     {0x4e300804, 0x1f1f1f1f},
