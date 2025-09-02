@@ -1200,7 +1200,8 @@ dtb-$(CONFIG_ARCH_IMX8M) += \
 #	imx93-phyboard-segin.dtb
 	
 dtb-$(CONFIG_ARCH_IMX9) += \
-	imx93-nei000x0.dtb
+	imx93-nei000x0.dtb \
+	imx93-ost000x0.dtb
 
 dtb-$(CONFIG_ARCH_IMXRT) += imxrt1050-evk.dtb \
 	imxrt1020-evk.dtb \
