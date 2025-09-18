@@ -432,7 +432,8 @@ int board_init(void)
 #endif
 
 	// carrier board power enable
-	cb_pwr_en(1);
+	//cb_pwr_en(1);
+	//udelay(500);
 
 	// reset eth phys and setup the phys
 	adapter_fec_rst();
