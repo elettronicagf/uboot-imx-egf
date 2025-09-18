@@ -202,9 +202,9 @@
 &lpi2c2 {
 	status = "okay";
 	
-	eeprom_at24mac402: eeprom@48 {
+	eeprom_at24mac402: eeprom@50 {
 		compatible = "atmel,24c02";
-		reg = <0x48>;
+		reg = <0x50>;
 		pagesize = <16>;
 	};
 	
