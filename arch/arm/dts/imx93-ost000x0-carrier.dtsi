@@ -107,10 +107,9 @@
 		regulator-name = "3V3_CAMERA";
 		regulator-min-microvolt = <3300000>;
 		regulator-max-microvolt = <3300000>;
-		vin-supply = <&reg_3v3_vio>;
-		gpio = <&gpio2 16 GPIO_ACTIVE_LOW>;
-		off-on-delay-us = <12000>;
-		enable-active-low;
+		vin-supply = <&reg_3v3>;
+		gpio = <&gpio2 16 GPIO_ACTIVE_HIGH>;
+		enable-active-high;
 	};
 
 	reg_3v3_ts: regulator-3v3-ts {
@@ -307,7 +306,7 @@
 	pinctrl-1 = <&pinctrl_usdhc2_100mhz>, <&pinctrl_usdhc2_gpio>;
 	pinctrl-2 = <&pinctrl_usdhc2_200mhz>, <&pinctrl_usdhc2_gpio>;
 	cd-gpios = <&gpio3 00 GPIO_ACTIVE_LOW>;
-	vmmc-supply = <&reg_3v3>;
+	vmmc-supply = <&reg_3v3_camera>;
 	bus-width = <4>;
 	no-sdio;
 	no-mmc;
@@ -318,20 +317,16 @@
 //=== USDHC3 usd
 //=============================================================================
 &usdhc3 {
-/*
 	pinctrl-names = "default", "state_100mhz", "state_200mhz";
 	pinctrl-0 = <&pinctrl_usdhc3>, <&pinctrl_usdhc3_gpio>;
 	pinctrl-1 = <&pinctrl_usdhc3_100mhz>, <&pinctrl_usdhc3_gpio>;
 	pinctrl-2 = <&pinctrl_usdhc3_200mhz>, <&pinctrl_usdhc3_gpio>;	
-*/
-	pinctrl-names = "default";
-	pinctrl-0 = <&pinctrl_usdhc3>, <&pinctrl_usdhc3_gpio>;
 	cd-gpios = <&gpio2 20 GPIO_ACTIVE_LOW>;
 	vmmc-supply = <&reg_3v3>;
 	bus-width = <4>;
 	no-sdio;
 	no-mmc;
-	status = "okay";
+	status = "disabled";
 };
 
 
@@ -351,7 +346,7 @@
 
 	pinctrl_reg_3v3_camera: reg3v3cameragrp {
 		fsl,pins = <
-			MX93_PAD_GPIO_IO16__GPIO2_IO16								0x91e
+			MX93_PAD_GPIO_IO16__GPIO2_IO16								0x31e
 		>;
 	};	
 
@@ -460,25 +455,25 @@
 
 	pinctrl_usdhc2_gpio: usdhc2gpiogrp {
 		fsl,pins = <
-			MX93_PAD_SD2_CD_B__GPIO3_IO00								0x51e
+			MX93_PAD_SD2_CD_B__GPIO3_IO00								0x31e
 		>;
 	};
 
 	pinctrl_usdhc3_gpio: usdhc3gpiogrp {
 		fsl,pins = <
-			MX93_PAD_GPIO_IO20__GPIO2_IO20								0x51e
+			MX93_PAD_GPIO_IO20__GPIO2_IO20								0x31e
 		>;
 	};
 	
 	/* need to config the SION for data and cmd pad, refer to ERR052021 */
 	pinctrl_usdhc2: usdhc2grp {
 		fsl,pins = <
-			MX93_PAD_SD2_CLK__USDHC2_CLK								0x1502
-			MX93_PAD_SD2_CMD__USDHC2_CMD								0x40001302
-			MX93_PAD_SD2_DATA0__USDHC2_DATA0							0x40001302
-			MX93_PAD_SD2_DATA1__USDHC2_DATA1							0x40001302
-			MX93_PAD_SD2_DATA2__USDHC2_DATA2							0x40001302
-			MX93_PAD_SD2_DATA3__USDHC2_DATA3							0x40001302
+			MX93_PAD_SD2_CLK__USDHC2_CLK								0x1582
+			MX93_PAD_SD2_CMD__USDHC2_CMD								0x40001382
+			MX93_PAD_SD2_DATA0__USDHC2_DATA0							0x40001382
+			MX93_PAD_SD2_DATA1__USDHC2_DATA1							0x40001382
+			MX93_PAD_SD2_DATA2__USDHC2_DATA2							0x40001382
+			MX93_PAD_SD2_DATA3__USDHC2_DATA3							0x40001382
 			MX93_PAD_SD2_VSELECT__USDHC2_VSELECT						0x51e
 		>;
 	};

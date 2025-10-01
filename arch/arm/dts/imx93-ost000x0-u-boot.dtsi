@@ -82,6 +82,14 @@
 	bootph-pre-ram;
 };
 */
+&reg_3v3_camera {
+	bootph-pre-ram;
+};
+
+&pinctrl_reg_3v3_camera {
+	bootph-pre-ram;
+};
+
 &pinctrl_uart1 {
 	bootph-pre-ram;
 	bootph-some-ram;
