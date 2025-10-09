@@ -94,7 +94,11 @@ void spl_dram_init(void)
 
 	/* Save RAM size to a fixed address, for u-boot */
 	u64 * total_dram_size = (u64 *) CONFIG_SAVED_DRAM_SIZE_BASE;
+#ifndef CONFIG_MFG_EMB_DDR
 	*total_dram_size = my_timings.total_size;
+#else
+	*total_dram_size = dram_timing.total_size;
+#endif
 }
 
 #if CONFIG_IS_ENABLED(DM_PMIC_PF0900)
