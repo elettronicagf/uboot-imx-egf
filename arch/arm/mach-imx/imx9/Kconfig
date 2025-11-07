@@ -85,6 +85,11 @@ config TARGET_IMX93_OST001X0
 	select IMX93
 	select IMX9_LPDDR4X
 
+config TARGET_IMX93_OST000X1
+	bool "imx93_ost000x1"
+	select IMX93
+	select IMX9_LPDDR4X
+
 config TARGET_IMX95_19X19_EVK
 	bool "imx95_19x19_evk"
 	select IMX95
@@ -110,6 +115,7 @@ source "board/toradex/verdin-imx95/Kconfig"
 source "board/maselettronica/imx93_nei000x0/Kconfig"
 source "board/maselettronica/imx93_ost000x0/Kconfig"
 source "board/maselettronica/imx93_ost001x0/Kconfig"
+source "board/maselettronica/imx93_ost000x1/Kconfig"
 
 endif
 
