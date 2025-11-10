@@ -79,7 +79,6 @@
 		gpio = <&gpio2 17 GPIO_ACTIVE_HIGH>;
 		off-on-delay-us = <12000>;
 		enable-active-high;
-		regulator-always-on;	
 	};
 
 	reg_usb1: regulator-usb1 {
@@ -306,7 +305,7 @@
 	bus-width = <4>;
 	no-sdio;
 	no-mmc;
-	status = "okay";
+	status = "disabled";
 };
 
 
@@ -447,14 +446,14 @@
 	
 	/* need to config the SION for data and cmd pad, refer to ERR052021 */
 	pinctrl_usdhc2: usdhc2grp {
-		fsl,pins = <	
+		fsl,pins = <
 			MX93_PAD_SD2_CLK__USDHC2_CLK								0x1506
 			MX93_PAD_SD2_CMD__USDHC2_CMD								0x40001306
 			MX93_PAD_SD2_DATA0__USDHC2_DATA0							0x40001306
 			MX93_PAD_SD2_DATA1__USDHC2_DATA1							0x40001306
 			MX93_PAD_SD2_DATA2__USDHC2_DATA2							0x40001306
 			MX93_PAD_SD2_DATA3__USDHC2_DATA3							0x40001306
-			MX93_PAD_SD2_VSELECT__USDHC2_VSELECT						0x51e			
+			MX93_PAD_SD2_VSELECT__USDHC2_VSELECT						0x51e
 		>;
 	};
 
@@ -488,11 +487,11 @@
 	pinctrl_usdhc3: usdhc3grp {
 		fsl,pins = <
 			MX93_PAD_SD3_CLK__USDHC3_CLK								0x1506
-			MX93_PAD_SD3_CMD__USDHC3_CMD								0x40001106
-			MX93_PAD_SD3_DATA0__USDHC3_DATA0							0x40001106
-			MX93_PAD_SD3_DATA1__USDHC3_DATA1							0x40001106
-			MX93_PAD_SD3_DATA2__USDHC3_DATA2							0x40001106
-			MX93_PAD_SD3_DATA3__USDHC3_DATA3							0x40001106
+			MX93_PAD_SD3_CMD__USDHC3_CMD								0x40001306
+			MX93_PAD_SD3_DATA0__USDHC3_DATA0							0x40001306
+			MX93_PAD_SD3_DATA1__USDHC3_DATA1							0x40001306
+			MX93_PAD_SD3_DATA2__USDHC3_DATA2							0x40001306
+			MX93_PAD_SD3_DATA3__USDHC3_DATA3							0x40001306
 		>;
 	};
 	
