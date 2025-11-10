@@ -446,6 +446,12 @@ config TARGET_EGF_3SM1009
 	select SUPPORT_SPL
 	select IMX8M_LPDDR4
 
+config TARGET_EGF_3SM2008
+	bool "Support eGF 3SM2008 SoM Module"
+	select IMX8MP
+	select SUPPORT_SPL
+	select IMX8M_LPDDR4
+
 config TARGET_EGF_3SM1008
 	bool "Support eGF 3SM1008 SoM Module"
 	select IMX8MM
@@ -499,5 +505,6 @@ source "board/toradex/verdin-imx8mm/Kconfig"
 source "board/toradex/verdin-imx8mp/Kconfig"
 source "board/voxelbotics/navqp/Kconfig"
 source "board/egf/3sm1009/Kconfig"
+source "board/egf/3sm2008/Kconfig"
 source "board/egf/3sm1008/Kconfig"
 endif
