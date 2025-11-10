@@ -78,6 +78,14 @@
 	bootph-some-ram;
 };
 
+&reg_usdhc2_vmmc {
+	bootph-pre-ram;
+};
+
+&pinctrl_reg_usdhc2_vmmc {
+	bootph-pre-ram;
+};
+
 &pinctrl_usdhc1 {
 	bootph-pre-ram;
 };
