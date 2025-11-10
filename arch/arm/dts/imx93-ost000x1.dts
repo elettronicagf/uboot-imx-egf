@@ -10,7 +10,7 @@
 #include "imx93-ost000x1-carrier.dtsi"
 
 / {
-	model = "MAS i.MX93 OST001X0 board";
+	model = "MAS i.MX93 OST000X1 board";
 	compatible = "fsl,imx93-ost000x1", "fsl,imx93";
 
 	chosen {
