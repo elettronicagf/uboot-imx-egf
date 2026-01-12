@@ -446,6 +446,16 @@ config TARGET_EGF_3SM1009
 	select SUPPORT_SPL
 	select IMX8M_LPDDR4
 
+config TARGET_EGF_3SM2010
+	bool "Support eGF 3SM2010 SoM Module"
+	select IMX8MM
+	select SUPPORT_SPL
+	select IMX8M_LPDDR4
+	select FSL_CAAM
+	select FSL_BLOB
+	select ARCH_MISC_INIT
+	select SPL_CRYPTO if SPL
+
 config TARGET_EGF_3SM1008
 	bool "Support eGF 3SM1008 SoM Module"
 	select IMX8MM
@@ -499,5 +509,6 @@ source "board/toradex/verdin-imx8mm/Kconfig"
 source "board/toradex/verdin-imx8mp/Kconfig"
 source "board/voxelbotics/navqp/Kconfig"
 source "board/egf/3sm1009/Kconfig"
+source "board/egf/3sm2010/Kconfig"
 source "board/egf/3sm1008/Kconfig"
 endif

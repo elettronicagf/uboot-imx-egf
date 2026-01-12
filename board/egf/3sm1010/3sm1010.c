@@ -200,10 +200,10 @@ int eeprom_write_enable(int eeprom_i2c_bus, unsigned dev_addr, int state)
 	state == 1 ? printf("Unlocking eeprom\n") : printf("Locking eeprom\n");
 
 	if(eeprom_i2c_bus == I2C_SOM_EEPROM_BUS_NO && dev_addr == I2C_SOM_EEPROM_ADDR) {
-		// EEPROM on SoM 3SM1008
+		// EEPROM on SoM 3SM2010
 		state == 1 ? set_tca6408_gpio(EEPROM_SOM_WP_GPIO_INDEX, 0) : set_tca6408_gpio(EEPROM_SOM_WP_GPIO_INDEX, 1);
 	} else if (eeprom_i2c_bus == I2C_CARRIER_EEPROM_BUS_NO && dev_addr == I2C_CARRIER_EEPROM_ADDR) {
-		// Eeprom on Carrier 0880
+		// Eeprom on Carrier
 		state == 1 ? set_pcal6416_gpio(EEPROM_CARRIER_WP_GPIO_PORT, EEPROM_CARRIER_WP_GPIO_INDEX, 0) : set_pcal6416_gpio(EEPROM_CARRIER_WP_GPIO_PORT, EEPROM_CARRIER_WP_GPIO_INDEX, 1);
 	} else if (eeprom_i2c_bus == I2C_DISPLAY_EEPROM_BUS_NO && dev_addr == I2C_DISPLAY_EEPROM_ADDR) {
 		// Eeprom on Display Adapter - Not protected
@@ -216,10 +216,10 @@ int eeprom_write_enable(int eeprom_i2c_bus, unsigned dev_addr, int state)
 unsigned eeprom_page_size(int eeprom_i2c_bus, unsigned dev_addr)
 {
 	if(eeprom_i2c_bus == I2C_SOM_EEPROM_BUS_NO && dev_addr == I2C_SOM_EEPROM_ADDR) {
-		// Eeprom on SoM 3SM1008
+		// Eeprom on SoM 3SM2010
 		return 32;
 	} else if (eeprom_i2c_bus == I2C_CARRIER_EEPROM_BUS_NO && dev_addr == I2C_CARRIER_EEPROM_ADDR) {
-		// Eeprom on Carrier 0880
+		// Eeprom on Carrier
 		return 32;
 	} else if (eeprom_i2c_bus == I2C_DISPLAY_EEPROM_BUS_NO && dev_addr == I2C_DISPLAY_EEPROM_ADDR) {
 		// Eeprom on Display Adapter - Not protected
