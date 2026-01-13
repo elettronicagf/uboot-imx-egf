@@ -23,6 +23,8 @@ choice MFG_WID_OPTIONS
 
 	config FORCE_WID0700AA0101
 		bool "Select WID0700_AA01.01"
+	config FORCE_WID0700AB0101
+		bool "Select WID0700_AB01.01"
 
 
 endchoice
