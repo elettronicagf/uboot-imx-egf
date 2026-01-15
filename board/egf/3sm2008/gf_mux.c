@@ -46,7 +46,7 @@ static iomux_v3_cfg_t const usdhc3_pads[] = {
 	MX8MP_PAD_NAND_READY_B__USDHC3_RESET_B | MUX_PAD_CTRL(USDHC_PAD_CTRL),
 };
 
-static iomux_v3_cfg_t const fec1_rst_pads[] = {
+static iomux_v3_cfg_t const eqos_phy_rst_pads[] = {
 	MX8MP_PAD_SAI1_RXC__GPIO4_IO01 | MUX_PAD_CTRL(NO_PAD_CTRL),
 };
 
@@ -77,7 +77,7 @@ static void my_watchdog_init_mux(void)
 
 static void my_enet_init_mux(void)
 {
-	imx_iomux_v3_setup_multiple_pads(fec1_rst_pads, ARRAY_SIZE(fec1_rst_pads));
+	imx_iomux_v3_setup_multiple_pads(eqos_phy_rst_pads, ARRAY_SIZE(eqos_phy_rst_pads));
 }
 
 static void my_eeprom_init_mux(void)
