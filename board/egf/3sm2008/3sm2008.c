@@ -249,6 +249,10 @@ int board_late_init(void)
 	env_set("board_name", "eGF 3SM2008");
 	env_set("board_rev", "iMX8MP");
 #endif
+	printf("Power on PHY\n");
+	gpio_request(EQOS_PHY_RESET,"EQOS_PHY_RESET");
+	gpio_direction_output(EQOS_PHY_RESET, 0); // Switch on PHY. Important to let kernel probe it.
+
 
 	gf_init_som_eeprom(I2C_SOM_EEPROM_BUS_NO, I2C_SOM_EEPROM_ADDR);
 	gf_init_carrier_eeprom(I2C_CARRIER_EEPROM_BUS_NO, I2C_CARRIER_EEPROM_ADDR);

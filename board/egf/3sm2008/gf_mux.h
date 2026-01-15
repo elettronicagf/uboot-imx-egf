@@ -8,6 +8,7 @@
 #include <asm/mach-imx/mxc_i2c.h>
 
 #define EEPROM_WP_GPIO 42
+#define EQOS_PHY_RESET 97 // GPIO4_IO1. HIGH=Phy Off LOW=Phy On
 //#define CARRIER_WP_GPIO 123
 
 #define I2C_SOM_EEPROM_BUS_NO	0
