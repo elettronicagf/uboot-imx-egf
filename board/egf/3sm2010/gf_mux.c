@@ -115,11 +115,11 @@ void do_spl_pinmux(void)
 	my_watchdog_init_mux();
 	my_debug_uart_init_mux();
 	my_emmc_init_mux();
-	my_usb_power_init_mux();
 }
 
 void do_tpl_pinmux(void)
 {
+	my_usb_power_init_mux();
 	my_eeprom_init_mux();
 	my_enet_init_mux();
 }
