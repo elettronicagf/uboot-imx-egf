@@ -75,8 +75,8 @@ int board_usb_init(int index, enum usb_init_type init)
 
 	imx8m_usb_power(index, true);
 
-	// gpio_direction_output(USB2_PWREN_GPIO, 1);
-	// gpio_direction_output(USB1_PWREN_GPIO, 1);
+	gpio_direction_output(USB2_PWREN_GPIO, 1);
+	gpio_direction_output(USB1_PWREN_GPIO, 1);
 
 	return ret;
 }
@@ -89,8 +89,8 @@ int board_usb_cleanup(int index, enum usb_init_type init)
 
 	imx8m_usb_power(index, false);
 
-	// gpio_direction_output(USB2_PWREN_GPIO, 0);
-	// gpio_direction_output(USB1_PWREN_GPIO, 0);
+	gpio_direction_output(USB2_PWREN_GPIO, 0);
+	gpio_direction_output(USB1_PWREN_GPIO, 0);
 
 	return ret;
 }
