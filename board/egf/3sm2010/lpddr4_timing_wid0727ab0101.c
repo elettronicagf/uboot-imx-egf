@@ -3,7 +3,7 @@
  *
  * SPDX-License-Identifier: BSD-3-Clause
  *
- * Code generated with DDR Tool v3.4.0_22-e3369a1a.
+ * Code generated with DDR Tool v3.5.0_22-1ddf053d.
  * DDR PHY FW2017.09
  */
 
@@ -54,7 +54,7 @@ struct dram_cfg_param ddr_ddrc_cfg[] = {
     {0x3d400210, 0x1f1f},
     {0x3d400204, 0x80808},
     {0x3d400214, 0x7070707},
-    {0x3d400218, 0xf070707},
+    {0x3d400218, 0x7070707},
     {0x3d40021c, 0xf0f},
     {0x3d400250, 0x29001701},
     {0x3d400254, 0x2c},
@@ -1742,3 +1742,4 @@ struct dram_timing_info dram_timing = {
     .ddrphy_pie_num = ARRAY_SIZE(ddr_phy_pie),
     .fsp_table = { 3200, },
 };
+
