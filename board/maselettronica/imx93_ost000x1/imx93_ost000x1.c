@@ -298,9 +298,9 @@ void cb_pwr_en(int val) {
 	struct gpio_desc desc;
 	int ret;
 
-	ret = dm_gpio_lookup_name("GPIO2_24", &desc);
+	ret = dm_gpio_lookup_name("gpio1_10", &desc);
 	if (ret) {
-		printf("GPIO2_24: CB_PWR_EN not found\n");
+		printf("GPIO1_10: CB_PWR_EN not found\n");
 		return;
 	}
 
