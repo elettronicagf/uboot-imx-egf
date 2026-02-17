@@ -48,9 +48,9 @@
 		regulator-min-microvolt = <1800000>;
 		regulator-max-microvolt = <1800000>;
 		vin-supply = <&reg_3v3>;
-		gpio = <&gpio2 24 GPIO_ACTIVE_HIGH>;
+		gpio = <&gpio1 10 GPIO_ACTIVE_HIGH>;
 		off-on-delay-us = <12000>;
-		enable-active-low;		
+		enable-active-high;
 	};
 
 	reg_usdhc2_vmmc: regulator-usdhc2  {
@@ -319,7 +319,7 @@
 
 	pinctrl_reg_aon_dly: regaondlygrp {
 		fsl,pins = <
-			MX93_PAD_GPIO_IO24__GPIO2_IO24								0x91e
+			MX93_PAD_PDM_BIT_STREAM1__GPIO1_IO10						0x51e
 		>;
 	};
 
