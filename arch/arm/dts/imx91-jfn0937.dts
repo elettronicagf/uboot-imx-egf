@@ -1,0 +1,36 @@
+// SPDX-License-Identifier: (GPL-2.0+ OR MIT)
+/*
+ * Copyright 2022 NXP
+ */
+
+/dts-v1/;
+
+#include "imx91.dtsi"
+#include "imx91-jfn0937-ca01-osm.dtsi"
+#include "imx91-ost000x1-carrier.dtsi"
+
+/ {
+	model = "EGF i.MX91 JFN0937-CA01 board";
+	compatible = "fsl,imx91-jfn0937-ca01", "fsl,imx91";
+
+	chosen {
+		bootargs = "console=ttyLP0,115200";
+		stdout-path = &lpuart1;
+	};
+
+	reserved-memory {
+		#address-cells = <2>;
+		#size-cells = <2>;
+		ranges;
+
+		linux,cma {
+			compatible = "shared-dma-pool";
+			reusable;
+			alloc-ranges = <0 0x80000000 0 0x40000000>;
+			size = <0 0x10000000>;
+			linux,cma-default;
+		};
+	};
+
+};
+
