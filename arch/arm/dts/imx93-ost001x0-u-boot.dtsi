@@ -20,14 +20,14 @@
 
 	usbg1: usbg1 {
 		compatible = "fsl,imx27-usb-gadget";
-		dr_mode = "host";
+		dr_mode = "peripheral";
 		chipidea,usb = <&usbotg1>;
 		status = "okay";
 	};
 
 	usbg2: usbg2 {
 		compatible = "fsl,imx27-usb-gadget";
-		dr_mode = "host";
+		dr_mode = "peripheral";
 		chipidea,usb = <&usbotg2>;
 		status = "okay";
 	};
