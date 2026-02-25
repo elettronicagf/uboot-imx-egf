@@ -1,7 +1,7 @@
 i.MX93 OSM TEST BOARD
 M:	Dario Scarpa <dario.scarpa@maselettronica.com>
 S:	Maintained
-F:	board/fmaselettronica/imx93_ost000x1/
+F:	board/maselettronica/imx93_ost000x1/
 F:	include/configs/imx93_ost000x1.h
 F:	configs/imx93_ost000x1_defconfig
 F:	configs/imx93_ost000x1_emmc_defconfig
