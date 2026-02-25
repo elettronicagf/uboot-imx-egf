@@ -1,0 +1,7 @@
+i.MX91 OSM TEST BOARD
+M:	Dario Scarpa <dario.scarpa@maselettronica.com>
+S:	Maintained
+F:	board/maselettronica/imx91_jfn0937/
+F:	include/configs/imx91_jfn0937.h
+F:	configs/imx91_jfn0937_defconfig
+
