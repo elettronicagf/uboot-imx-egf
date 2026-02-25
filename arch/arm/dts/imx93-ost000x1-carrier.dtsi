@@ -90,9 +90,9 @@
 		regulator-min-microvolt = <5000000>;
 		regulator-max-microvolt = <5000000>;
 		vin-supply = <&reg_5v_sys>;
-		gpio = <&gpio2 12 GPIO_ACTIVE_LOW>;
+		gpio = <&gpio2 12 GPIO_ACTIVE_HIGH>;
 		off-on-delay-us = <12000>;
-		enable-active-low;
+		enable-active-high;
 	};
 
 	reg_usb2: regulator-usb2 {
@@ -104,9 +104,9 @@
 		regulator-min-microvolt = <5000000>;
 		regulator-max-microvolt = <5000000>;
 		vin-supply = <&reg_5v_sys>;
-		gpio = <&gpio2 14 GPIO_ACTIVE_LOW>;
+		gpio = <&gpio2 14 GPIO_ACTIVE_HIGH>;
 		off-on-delay-us = <12000>;
-		enable-active-low;
+		enable-active-high;
 	};
 
 };
@@ -265,11 +265,13 @@
 //=== USB1
 //=============================================================================
 &usbotg1 {
+/*	
 	dr_mode = "host";
 	/delete-property/ hnp-disable;
 	/delete-property/ srp-disable;
 	/delete-property/ adp-disable;
 	/delete-property/ usb-role-switch;
+*/
 	status = "okay";
 };
 
