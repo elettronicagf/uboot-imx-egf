@@ -36,6 +36,9 @@
 #include <power/pf0900.h>
 #include <asm/arch/trdc.h>
 
+#include <asm-generic/gpio.h>
+#define CB_PS_GPIO IMX_GPIO_NR(4, 10)
+
 DECLARE_GLOBAL_DATA_PTR;
 
 int spl_board_boot_device(enum boot_device boot_dev_spl)
@@ -230,6 +233,9 @@ void board_init_f(ulong dummy)
 	board_early_init_f();
 
 	spl_early_init();
+
+	gpio_request(CB_PS_GPIO, "CB_PWR_EN_gpio");
+	gpio_direction_output(CB_PS_GPIO, 1);
 
 	preloader_console_init();
 
