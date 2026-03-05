@@ -95,8 +95,8 @@
 	"loadbootscript=fatload mmc ${mmcdev}:${mmcpart} ${loadaddr} ${script};\0" \
 	"bootscript=echo Running bootscript from mmc ...; " \
 		"source\0" \
-	"loadimage=ext4load mmc ${mmcdev}:${mmcpart} ${loadaddr} ${image}\0" \
-	"loadfdt=ext4load mmc ${mmcdev}:${mmcpart} ${fdt_addr_r} ${fdtfile}\0" \
+	"loadimage=ext4load mmc ${mmcdev}:${mmcpart} ${loadaddr} boot/${image}\0" \
+	"loadfdt=ext4load mmc ${mmcdev}:${mmcpart} ${fdt_addr_r} boot/${fdtfile}\0" \
 	"loadcntr=fatload mmc ${mmcdev}:${mmcpart} ${cntr_addr} ${cntr_file}\0" \
 	"auth_os=auth_cntr ${cntr_addr}\0" \
 	"boot_os=booti ${loadaddr} - ${fdt_addr_r};\0" \
