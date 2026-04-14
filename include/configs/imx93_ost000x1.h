@@ -69,11 +69,11 @@
 
 /* Initial environment variables */
 #define CFG_EXTRA_ENV_SETTINGS		\
-	JAILHOUSE_ENV \
+	/*JAILHOUSE_ENV*/ \
 	CFG_MFG_ENV_SETTINGS \
 	BOOTENV \
 	AHAB_ENV \
-	SR_IR_V2_COMMAND \
+	/*SR_IR_V2_COMMAND*/ \
 	"prepare_mcore=setenv mcore_clk clk-imx93.mcore_booted;\0" \
 	"scriptaddr=0x83500000\0" \
 	"kernel_addr_r=" __stringify(CONFIG_SYS_LOAD_ADDR) "\0" \
