@@ -341,7 +341,7 @@ void adapter_eqos_rst(void) {
 	dm_gpio_set_value(&desc, 0);
 	mdelay(20);
 	dm_gpio_set_value(&desc, 1);
-	mdelay(100);
+	mdelay(10);
 	dm_gpio_free(desc.dev, &desc);
 }
 
@@ -368,7 +368,7 @@ void adapter_fec_rst(void) {
 	dm_gpio_set_value(&desc, 0);
 	mdelay(20);
 	dm_gpio_set_value(&desc, 1);
-	mdelay(100);
+	mdelay(10);
 
 	dm_gpio_free(desc.dev, &desc);
 }
