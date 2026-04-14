@@ -445,10 +445,10 @@ int board_init(void)
 		setup_fec();
 
 	// setup i2c address for GT928 to 0x5d
-	panellvds_touch_res(0);
-	panellvds_touch_int(0);
-	udelay(100);
-	panellvds_touch_res(1);
+	//panellvds_touch_res(0);
+	//panellvds_touch_int(0);
+	//udelay(100);
+	//panellvds_touch_res(1);
 
 	return 0;
 }
