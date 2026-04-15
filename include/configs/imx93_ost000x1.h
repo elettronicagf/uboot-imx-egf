@@ -20,17 +20,6 @@
 #define AHAB_ENV "sec_boot=no\0"
 #endif
 
-#ifdef CONFIG_DISTRO_DEFAULTS
-#define BOOT_TARGET_DEVICES(func) \
-	func(MMC, mmc, 1)
-/*	func(MMC, mmc, 0) \
-	func(MMC, mmc, 1) \
-	func(USB, usb, 0)*/
-
-#include <config_distro_bootcmd.h>
-#else
-#define BOOTENV
-#endif
 
 #define JH_ROOT_DTB    "imx93-ost000x1-root.dtb"
 
@@ -38,10 +27,24 @@
 	#define CGV_MMCROOT			"/dev/mmcblk0p1"	// usdhc0 eMMC: RFS partition
 	#define CGV_MMCPART			"1"					// kernel image and dtb partition
 	#define CGV_MMCDEV			"0"					// kernel image and dtb partition
+	#define BOOT_TD_FUNC		func(MMC, mmc, 0)
 #else
 	#define CGV_MMCROOT			"/dev/mmcblk1p1"	// usdhc1 USD:  RFS partition
 	#define CGV_MMCPART			"1"					// kernel image and dtb partition
 	#define CGV_MMCDEV			"1"					// kernel image and dtb partition
+	#define BOOT_TD_FUNC		func(MMC, mmc, 1)
+#endif
+
+#ifdef CONFIG_DISTRO_DEFAULTS
+#define BOOT_TARGET_DEVICES(func) \
+	BOOT_TD_FUNC
+/*	func(MMC, mmc, 0) \
+	func(MMC, mmc, 1) \
+	func(USB, usb, 0)*/
+
+#include <config_distro_bootcmd.h>
+#else
+#define BOOTENV
 #endif
 
 #define JAILHOUSE_ENV \
