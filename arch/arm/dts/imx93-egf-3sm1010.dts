@@ -30,6 +30,17 @@
 			linux,cma-default;
 		};
 	};
+
+	reg_usb_otg2_vbus: regulator-usb-otg2-vbus {
+		pinctrl-names = "default";
+		pinctrl-0 = <&pinctrl_usbotg2_pwr>;
+		compatible = "regulator-fixed";
+		regulator-name = "usb_otg2_vbus";
+		regulator-min-microvolt = <5000000>;
+		regulator-max-microvolt = <5000000>;
+		gpio = <&gpio2 13 GPIO_ACTIVE_HIGH>;
+		enable-active-high;
+	};
 };
 
 &eqos {
@@ -190,7 +201,7 @@
 
 
 &usbotg1 {
-	dr_mode = "otg";
+	dr_mode = "peripheral";
 	hnp-disable;
 	srp-disable;
 	adp-disable;
@@ -202,12 +213,12 @@
 };
 
 &usbotg2 {
-	dr_mode = "otg";
+	vbus-supply = <&reg_usb_otg2_vbus>;
+	dr_mode = "host";
+	disable-over-current;
 	hnp-disable;
 	srp-disable;
 	adp-disable;
-	usb-role-switch;
-	disable-over-current;
 	samsung,picophy-pre-emp-curr-control = <3>;
 	samsung,picophy-dc-vol-level-adjust = <7>;
 	status = "okay";
@@ -336,6 +347,11 @@
 			MX93_PAD_SD1_DATA6__USDHC1_DATA6	0x400013fe
 			MX93_PAD_SD1_DATA7__USDHC1_DATA7	0x400013fe
 			MX93_PAD_SD1_STROBE__USDHC1_STROBE	0x15fe
+		>;
+	};
+	pinctrl_usbotg2_pwr: usbotg2pwrgrp {
+		fsl,pins = <
+			MX93_PAD_GPIO_IO13__GPIO2_IO13		0x31e
 		>;
 	};
 };
