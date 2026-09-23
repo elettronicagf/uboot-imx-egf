@@ -607,5 +607,6 @@ source "board/toradex/smarc-imx8mp/Kconfig"
 source "board/toradex/verdin-imx8mm/Kconfig"
 source "board/toradex/verdin-imx8mp/Kconfig"
 source "board/egf/3sm1009/Kconfig"
+source "board/egf/3sm2008/Kconfig"
 source "board/egf/3sm1008/Kconfig"
 endif
