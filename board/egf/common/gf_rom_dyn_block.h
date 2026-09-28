@@ -1,6 +1,5 @@
 #ifndef _DYN_BLOCK_
 #define _DYN_BLOCK_
-#include <common.h>
 #include <asm/io.h>
 #include <asm/types.h>
 

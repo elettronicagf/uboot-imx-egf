@@ -3,6 +3,8 @@
 #include "gf_rom_dyn_block.h"
 #include "gf_rom_field.h"
 #include <stdlib.h>
+#include <linux/sizes.h>
+
 
 #define GF_ROM_SW_VERSION "3.0.0"
 

@@ -1,7 +1,6 @@
 #ifndef GF_UTIL_H_
 #define GF_UTIL_H_
 
-#include <common.h>
 #include <asm/io.h>
 #include <asm/types.h>
 #include <i2c.h>

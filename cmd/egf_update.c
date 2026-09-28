@@ -7,11 +7,13 @@
  * SPDX-License-Identifier:	GPL-2.0+
  */
 
-#include <common.h>
 #include <command.h>
 #include <asm/io.h>
 #include <asm/gpio.h>
 #include <fs.h>
+#include <vsprintf.h>
+#include <env.h>
+
 
 static int do_egf_update_validate_header(struct cmd_tbl *cmdtp, int flag, int argc, char * const argv[])
 {

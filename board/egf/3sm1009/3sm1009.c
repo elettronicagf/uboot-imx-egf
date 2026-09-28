@@ -32,6 +32,10 @@ DECLARE_GLOBAL_DATA_PTR;
 
 
 #if CONFIG_IS_ENABLED(EFI_HAVE_CAPSULE_SUPPORT)
+#define IMX_BOOT_IMAGE_GUID \
+	EFI_GUID(0x928b33bc, 0xe58b, 0x4247, 0x9f, 0x1d, \
+		 0x3b, 0xf1, 0xee, 0x1c, 0xda, 0xff)
+
 struct efi_fw_image fw_images[] = {
 	{
 		.image_type_id = IMX_BOOT_IMAGE_GUID,
@@ -114,12 +118,6 @@ static struct dwc3_device dwc3_device_data = {
 	.power_down_scale = 2,
 };
 
-int dm_usb_gadget_handle_interrupts(struct udevice *dev)
-{
-	dwc3_uboot_handle_interrupt(dev);
-	return 0;
-}
-
 static void dwc3_nxp_usb_phy_init(struct dwc3_device *dwc3)
 {
 	u32 RegData;
@@ -189,6 +187,31 @@ int board_usb_cleanup(int index, enum usb_init_type init)
 
 #endif
 
+#if IS_ENABLED(CONFIG_IMX8MP_GP5_LOCK_UPDATE)
+#define GP5_LOCK_WPOP 0x300
+
+static void lock_gp5_fuse(void)
+{
+	u32 val = 0;
+	int ret;
+
+	ret = fuse_sense(0, 1, &val);
+	if (ret) {
+		printf("Sense GP5_LOCK fuse failed\n");
+		return;
+	}
+
+	if ((val & GP5_LOCK_WPOP) != GP5_LOCK_WPOP) {
+		printf("Locking GP5 ");
+		ret = fuse_prog(0, 1, GP5_LOCK_WPOP);
+		if (!ret)
+			printf("done\n");
+		else
+			printf("failed %d\n", ret);
+
+	}
+}
+#endif
 
 
 int eeprom_write_enable(int eeprom_i2c_bus, unsigned dev_addr, int state)
@@ -227,6 +250,10 @@ int board_init(void)
 {
 
 	do_tpl_pinmux();
+
+#if IS_ENABLED(CONFIG_IMX8MP_GP5_LOCK_UPDATE)
+	lock_gp5_fuse();
+#endif
 
 #if defined(CONFIG_USB_DWC3) || defined(CONFIG_USB_XHCI_IMX8M)
 	init_usb_clk();

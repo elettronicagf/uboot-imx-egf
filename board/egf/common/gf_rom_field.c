@@ -1,8 +1,8 @@
 #include "gf_rom_field.h"
-
-#include <common.h>
 #include <linux/string.h>
-
+#include <stdio.h>
+#include <vsprintf.h>
+#include <linux/kernel.h>
 const char* device_type_string[] = {
 		"Invalid",
 		"SoM",
