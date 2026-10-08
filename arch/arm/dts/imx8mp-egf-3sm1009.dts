@@ -286,7 +286,7 @@
 	at24@50 {
 		compatible = "atmel,24c256";
 		pagesize = <32>;
-		reg = <0x51>;
+		reg = <0x50>;
 	};
 };
 
