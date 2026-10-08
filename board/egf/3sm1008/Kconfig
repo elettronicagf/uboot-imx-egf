@@ -10,7 +10,7 @@ config SYS_CONFIG_NAME
 	default "egf_3sm1008"
 
 config IMX_CONFIG
-	default "board/freescale/imx8mm_evk/imximage-8mm.cfg"
+	default "board/nxp/imx8mm_evk/imximage-8mm.cfg"
 
 config MFG_EMB_DDR
 	bool "Force embedded DDR Memory timings without reading EEPROM"

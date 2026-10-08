@@ -2,7 +2,6 @@
 /*
  * Copyright 2018 NXP
  */
-#include <common.h>
 #include <efi_loader.h>
 #include <env.h>
 #include <init.h>
@@ -18,6 +17,7 @@
 #include <asm/mach-imx/mxc_i2c.h>
 #include <i2c.h>
 #include <asm/io.h>
+#include <asm/types.h>
 #include <usb.h>
 #include "gf_mux.h"
 #include "../common/gf_eeprom.h"
