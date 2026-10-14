@@ -139,6 +139,7 @@
 	"usbargs=setenv bootargs console=${console} quiet \0 " \
 	"loadfdt_usb=fatload usb 0 ${fdt_addr_r} ${fdtfile}\0" \
 	"loadimage_usb=fatload usb 0 ${loadaddr} ${image}\0" \
+	"usb_pgood_delay=3000\0" \
 	"usbboot=echo Searching for usb boot devices ...; " \
 		"usb start; " \
 		"if run loadfdt_usb; then " \
