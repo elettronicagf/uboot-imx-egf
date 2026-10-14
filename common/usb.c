@@ -1111,10 +1111,16 @@ int usb_select_config(struct usb_device *dev)
 	err = usb_get_configuration_len(dev, 0);
 	if (err >= 0) {
 		tmpbuf = (unsigned char *)malloc_cache_aligned(err);
-		if (!tmpbuf)
+		if (!tmpbuf) {
 			err = -ENOMEM;
-		else
+		} else {
+			/*
+			 * Taken from https://lists.u-boot-project.org/pipermail/u-boot/2026-February/610581.html
+			 */
+			mdelay(1);
+
 			err = usb_get_configuration_no(dev, 0, tmpbuf, err);
+		}
 	}
 	if (err < 0) {
 		printf("usb_new_device: Cannot read configuration, " \
