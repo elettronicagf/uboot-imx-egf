@@ -3,8 +3,8 @@
  * Copyright 2019 NXP
  */
 
-#ifndef __IMX8MP_EVK_H
-#define __IMX8MP_EVK_H
+#ifndef __EGF_3SM1009_H
+#define __EGF_3SM1009_H
 
 #include <linux/sizes.h>
 #include <linux/stringify.h>
