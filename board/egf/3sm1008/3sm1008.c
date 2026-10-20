@@ -25,6 +25,10 @@
 DECLARE_GLOBAL_DATA_PTR;
 
 #if CONFIG_IS_ENABLED(EFI_HAVE_CAPSULE_SUPPORT)
+#define IMX_BOOT_IMAGE_GUID \
+	EFI_GUID(0xead2005e, 0x7780, 0x400b, 0x93, 0x48, \
+		 0xa2, 0x82, 0xeb, 0x85, 0x8b, 0x6b)
+
 struct efi_fw_image fw_images[] = {
 	{
 		.image_type_id = IMX_BOOT_IMAGE_GUID,
