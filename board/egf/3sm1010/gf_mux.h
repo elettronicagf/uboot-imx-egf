@@ -1,7 +1,6 @@
 #ifndef GF_MUX_H_
 #define GF_MUX_H_
 
-#include <common.h>
 #include <asm/mach-imx/iomux-v3.h>
 #include <asm/arch-imx9/imx93_pins.h>
 

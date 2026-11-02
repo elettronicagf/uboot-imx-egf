@@ -1,4 +1,5 @@
 #include "gf_mux.h"
+#define ARRAY_SIZE(x) (sizeof(x) / sizeof((x)[0]))
 
 #define UART_PAD_CTRL	(PAD_CTL_DSE(6) | PAD_CTL_FSEL2)
 

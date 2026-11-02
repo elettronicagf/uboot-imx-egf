@@ -3,7 +3,6 @@
  * Copyright 2022 NXP
  */
 
-#include <common.h>
 #include <env.h>
 #include <efi_loader.h>
 #include <init.h>
